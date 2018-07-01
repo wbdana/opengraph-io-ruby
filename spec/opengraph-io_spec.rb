@@ -1,6 +1,5 @@
-# To run the tests, run:
-# !#/bin/bash
-# APP_ID='your_app_id_here' rspec
+require 'coveralls'
+Coveralls.wear!
 require 'cgi'
 require 'opengraph-io'
 
