@@ -33,7 +33,9 @@ class OpenGraphIO
   end
 
   def get_site_info_url(url)
-    'https://opengraph.io/api/' + @version + '/site/' + CGI.escape(url) + '?app_id=' + @app_id
+    proto =
+      @app_id.nil? ? 'http' : 'https'
+    proto + '://opengraph.io/api/' + @version + '/site/' + CGI.escape(url)
   end
 
   def get_site_info_query_params(options)
