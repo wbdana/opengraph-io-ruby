@@ -2,6 +2,7 @@
 
 class OpenGraphIO
   require 'cgi'
+  require 'json'
   require 'net/http'
   attr_accessor :app_id, :cache_ok, :full_render, :version
 
@@ -32,24 +33,39 @@ class OpenGraphIO
   end
 
   def get_site_info_url(url)
-    'https://opengraph.io/api' + @version + '/site/' + CGI.escape(url)
+    'https://opengraph.io/api/' + @version + '/site/' + CGI.escape(url) + '?app_id=' + @app_id
   end
 
   def get_site_info_query_params(options)
     query_string_values = {}
+
+    query_string_values[:app_id] = 
+      options.has_key?(:app_id) ?
+        options[:app_id] :
+        @app_id
 
     query_string_values[:cache_ok] =
       options.has_key?(:cache_ok) ?
         options[:cache_ok] :
         @cache_ok
 
-    query_string_values[:app_id] = 
-      options.has_key?(:app_id) ?
-        options[:app_id] :
-        @app_id
-    
+    query_string_values[:full_render] =
+      options.has_key?(:full_render) ?
+        options[:full_render] :
+        @full_render
+
+    query_string_values[:version] =
+      options.has_key?(:version) ?
+        options[:version] :
+        @version
+
     query_string_values
   end
 
-  
+  def get_site_info(passed_url, options = {})
+    uri = URI(get_site_info_url(passed_url))
+    uri.query = URI.encode_www_form(get_site_info_query_params(options))
+    response = Net::HTTP.get(uri)
+    parsed = JSON.parse(response)
+  end
 end
