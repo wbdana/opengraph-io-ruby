@@ -9,8 +9,8 @@ class OpenGraphIO
 
   def initialize(options)
     # Throw an error if app_id is not present in options hash
-    raise StandardError.new(
-      'app_id must be supplied when making requests to the API.'\
+    raise ArgumentError.new(
+      'app_id must be supplied when making requests to the API. '\
       'Get a free app_id by signing up here: https://www.opengraph.io/'
     ) unless options.has_key?(:app_id)
 
