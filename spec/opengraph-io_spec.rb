@@ -4,7 +4,7 @@ require 'cgi'
 require 'opengraph-io'
 
 RSpec.describe OpenGraphIO, 'OpenGraphIO Ruby Client Tests' do
-  context 'Client Setup' do
+  describe 'Client Setup' do
     it 'should initialize with an app_id and default values' do
       options = {
         app_id: ENV['APP_ID']
@@ -89,10 +89,24 @@ RSpec.describe OpenGraphIO, 'OpenGraphIO Ruby Client Tests' do
   end
 
   describe 'Full Tests' do
-    it 'should get results from a site with no options' do
+    it 'should get results from a site with only an app_id' do
       og = OpenGraphIO.new({app_id: ENV['APP_ID']})
       test_url = 'https://github.com'
       response = og.get_site_info(test_url)
+
+      expect(response['hybridGraph']['url']).to eql(test_url)
+      expect(response['hybridGraph']['title']).to eql('Build software better, together')
+    end
+
+    it 'should get results from a site with options' do
+      og = OpenGraphIO.new({
+        app_id: ENV['APP_ID'],
+        cache_ok: false,
+        full_render: true
+      })
+      test_url = 'https://github.com'
+      response = og.get_site_info(test_url)
+
       expect(response['hybridGraph']['url']).to eql(test_url)
       expect(response['hybridGraph']['title']).to eql('Build software better, together')
     end
