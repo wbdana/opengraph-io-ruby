@@ -32,7 +32,7 @@ require 'opengraph-io'
 opengraph = OpenGraphIO.new({app_id: 'your_app_id_here!'})
 ```
 
-#### Initialization with Setting Default Options
+#### Setting Default Options at Initialization
 
 You may also initialize your OpenGraphIO instance with default options. For example, if you would always like to perform a ```full_render```, you can pass that parameter in the options hash at initialization along with your ```app_id```:
 
