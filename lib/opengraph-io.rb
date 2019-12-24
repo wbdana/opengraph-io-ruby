@@ -4,7 +4,7 @@ class OpenGraphIO
   require 'cgi'
   require 'json'
   require 'net/http'
-  attr_accessor :app_id, :cache_ok, :full_render, :version
+  attr_accessor :app_id, :cache_ok, :full_render, :version, :use_proxy
 
 
   def initialize(options)
@@ -21,6 +21,10 @@ class OpenGraphIO
     @cache_ok =
       options.has_key?(:cache_ok) ?
         options[:cache_ok] :
+        true
+    @use_proxy =
+      options.has_key?(:use_proxy) ?
+        options[:use_proxy] :
         true
     @full_render =
       options.has_key?(:full_render) ?
@@ -48,6 +52,11 @@ class OpenGraphIO
       options.has_key?(:cache_ok) ?
         options[:cache_ok] :
         @cache_ok
+    
+    query_string_values[:use_proxy] =
+      options.has_key?(:use_proxy) ?
+        options[:use_proxy] :
+        @use_proxy
 
     query_string_values[:full_render] =
       options.has_key?(:full_render) ?
