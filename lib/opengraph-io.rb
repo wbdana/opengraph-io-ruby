@@ -22,14 +22,17 @@ class OpenGraphIO
       options.has_key?(:cache_ok) ?
         options[:cache_ok] :
         true
+
     @use_proxy =
       options.has_key?(:use_proxy) ?
         options[:use_proxy] :
-        true
+        false
+
     @full_render =
       options.has_key?(:full_render) ?
         options[:full_render] :
         false
+
     @version =
       options.has_key?(:version) ?
         options[:version] :
